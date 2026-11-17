@@ -1,0 +1,81 @@
+=== R25 run 1 ===
+Sort  (cost=847.95..848.21 rows=101 width=48) (actual time=0.053..0.054 rows=3.00 loops=1)
+  Sort Key: thread.depth DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=12
+  CTE thread
+    ->  Recursive Union  (cost=0.29..842.57 rows=101 width=36) (actual time=0.012..0.034 rows=3.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=9
+          ->  Index Scan using messages_pkey on messages  (cost=0.29..8.31 rows=1 width=36) (actual time=0.011..0.011 rows=1.00 loops=1)
+                Index Cond: (message_id = 119989)
+                Index Searches: 1
+                Buffers: shared hit=3
+          ->  Nested Loop  (cost=0.29..83.33 rows=10 width=36) (actual time=0.007..0.007 rows=0.67 loops=3)
+                Buffers: shared hit=6
+                ->  WorkTable Scan on thread t  (cost=0.00..0.20 rows=10 width=8) (actual time=0.000..0.000 rows=1.00 loops=3)
+                ->  Index Scan using messages_pkey on messages m  (cost=0.29..8.31 rows=1 width=32) (actual time=0.005..0.005 rows=0.67 loops=3)
+                      Index Cond: (message_id = t.reply_to_message_id)
+                      Index Searches: 2
+                      Buffers: shared hit=6
+  ->  CTE Scan on thread  (cost=0.00..2.02 rows=101 width=48) (actual time=0.013..0.036 rows=3.00 loops=1)
+        Storage: Memory  Maximum Storage: 17kB
+        Buffers: shared hit=9
+Planning:
+  Buffers: shared hit=82
+Planning Time: 0.401 ms
+Execution Time: 0.116 ms
+=== R25 run 2 ===
+Sort  (cost=847.95..848.21 rows=101 width=48) (actual time=0.061..0.062 rows=3.00 loops=1)
+  Sort Key: thread.depth DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=12
+  CTE thread
+    ->  Recursive Union  (cost=0.29..842.57 rows=101 width=36) (actual time=0.015..0.039 rows=3.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=9
+          ->  Index Scan using messages_pkey on messages  (cost=0.29..8.31 rows=1 width=36) (actual time=0.014..0.014 rows=1.00 loops=1)
+                Index Cond: (message_id = 119989)
+                Index Searches: 1
+                Buffers: shared hit=3
+          ->  Nested Loop  (cost=0.29..83.33 rows=10 width=36) (actual time=0.007..0.007 rows=0.67 loops=3)
+                Buffers: shared hit=6
+                ->  WorkTable Scan on thread t  (cost=0.00..0.20 rows=10 width=8) (actual time=0.000..0.000 rows=1.00 loops=3)
+                ->  Index Scan using messages_pkey on messages m  (cost=0.29..8.31 rows=1 width=32) (actual time=0.006..0.006 rows=0.67 loops=3)
+                      Index Cond: (message_id = t.reply_to_message_id)
+                      Index Searches: 2
+                      Buffers: shared hit=6
+  ->  CTE Scan on thread  (cost=0.00..2.02 rows=101 width=48) (actual time=0.017..0.041 rows=3.00 loops=1)
+        Storage: Memory  Maximum Storage: 17kB
+        Buffers: shared hit=9
+Planning:
+  Buffers: shared hit=82
+Planning Time: 0.421 ms
+Execution Time: 0.127 ms
+=== R25 run 3 ===
+Sort  (cost=847.95..848.21 rows=101 width=48) (actual time=0.064..0.065 rows=3.00 loops=1)
+  Sort Key: thread.depth DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=12
+  CTE thread
+    ->  Recursive Union  (cost=0.29..842.57 rows=101 width=36) (actual time=0.016..0.041 rows=3.00 loops=1)
+          Storage: Memory  Maximum Storage: 33kB
+          Buffers: shared hit=9
+          ->  Index Scan using messages_pkey on messages  (cost=0.29..8.31 rows=1 width=36) (actual time=0.015..0.015 rows=1.00 loops=1)
+                Index Cond: (message_id = 119989)
+                Index Searches: 1
+                Buffers: shared hit=3
+          ->  Nested Loop  (cost=0.29..83.33 rows=10 width=36) (actual time=0.007..0.007 rows=0.67 loops=3)
+                Buffers: shared hit=6
+                ->  WorkTable Scan on thread t  (cost=0.00..0.20 rows=10 width=8) (actual time=0.000..0.000 rows=1.00 loops=3)
+                ->  Index Scan using messages_pkey on messages m  (cost=0.29..8.31 rows=1 width=32) (actual time=0.006..0.006 rows=0.67 loops=3)
+                      Index Cond: (message_id = t.reply_to_message_id)
+                      Index Searches: 2
+                      Buffers: shared hit=6
+  ->  CTE Scan on thread  (cost=0.00..2.02 rows=101 width=48) (actual time=0.017..0.043 rows=3.00 loops=1)
+        Storage: Memory  Maximum Storage: 17kB
+        Buffers: shared hit=9
+Planning:
+  Buffers: shared hit=82
+Planning Time: 0.444 ms
+Execution Time: 0.132 ms
