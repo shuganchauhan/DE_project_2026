@@ -1,4 +1,5 @@
-# WhatsApp Messaging Database: DBMS Project
+# WhatsApp Messaging Database:- DBMS Project
+
 
 **Course:** Database Management Systems · **Year:** B.Tech 2nd year · **Team size:** 4
 **Database:** PostgreSQL 15 or newer · **Final submission:** Mon 23 Nov 2026
