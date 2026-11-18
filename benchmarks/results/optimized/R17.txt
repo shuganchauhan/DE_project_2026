@@ -1,0 +1,126 @@
+=== R17 run 1 ===
+Sort  (cost=7331.72..7331.74 rows=6 width=45) (actual time=12.558..14.269 rows=6.00 loops=1)
+  Sort Key: (round(avg((EXTRACT(epoch FROM (r.read_at - m.sent_at)) / 60.0)), 2))
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=19915
+  ->  Finalize GroupAggregate  (cost=7330.31..7331.64 rows=6 width=45) (actual time=12.535..14.256 rows=6.00 loops=1)
+        Group Key: m.message_type
+        Buffers: shared hit=19912
+        ->  Gather Merge  (cost=7330.31..7331.45 rows=10 width=45) (actual time=12.522..14.239 rows=12.00 loops=1)
+              Workers Planned: 1
+              Workers Launched: 1
+              Buffers: shared hit=19912
+              ->  Sort  (cost=6330.30..6330.32 rows=6 width=45) (actual time=10.123..10.125 rows=6.00 loops=2)
+                    Sort Key: m.message_type
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=19912
+                    Worker 0:  Sort Method: quicksort  Memory: 25kB
+                    ->  Partial HashAggregate  (cost=6330.15..6330.23 rows=6 width=45) (actual time=10.088..10.090 rows=6.00 loops=2)
+                          Group Key: m.message_type
+                          Batches: 1  Memory Usage: 32kB
+                          Buffers: shared hit=19904
+                          Worker 0:  Batches: 1  Memory Usage: 32kB
+                          ->  Nested Loop  (cost=177.94..6146.42 rows=12249 width=21) (actual time=0.194..5.619 rows=10349.00 loops=2)
+                                Buffers: shared hit=19904
+                                ->  Parallel Bitmap Heap Scan on messages m  (cost=177.51..1604.99 rows=3965 width=17) (actual time=0.159..0.536 rows=3296.50 loops=2)
+                                      Recheck Cond: ((sent_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (sent_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                      Heap Blocks: exact=42
+                                      Buffers: shared hit=122
+                                      Worker 0:  Heap Blocks: exact=32
+                                      ->  Bitmap Index Scan on idx_messages_sent_sender  (cost=0.00..175.83 rows=6741 width=0) (actual time=0.214..0.214 rows=6593.00 loops=1)
+                                            Index Cond: ((sent_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (sent_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                            Index Searches: 1
+                                            Buffers: shared hit=28
+                                ->  Index Only Scan using idx_receipts_msg_read on message_receipts r  (cost=0.42..1.11 rows=4 width=12) (actual time=0.001..0.001 rows=3.14 loops=6593)
+                                      Index Cond: ((message_id = m.message_id) AND (read_at IS NOT NULL))
+                                      Heap Fetches: 0
+                                      Index Searches: 6593
+                                      Buffers: shared hit=19782
+Planning:
+  Buffers: shared hit=423
+Planning Time: 2.456 ms
+Execution Time: 14.421 ms
+=== R17 run 2 ===
+Sort  (cost=7331.72..7331.74 rows=6 width=45) (actual time=12.389..14.926 rows=6.00 loops=1)
+  Sort Key: (round(avg((EXTRACT(epoch FROM (r.read_at - m.sent_at)) / 60.0)), 2))
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=19915
+  ->  Finalize GroupAggregate  (cost=7330.31..7331.64 rows=6 width=45) (actual time=12.363..14.909 rows=6.00 loops=1)
+        Group Key: m.message_type
+        Buffers: shared hit=19912
+        ->  Gather Merge  (cost=7330.31..7331.45 rows=10 width=45) (actual time=12.337..14.881 rows=12.00 loops=1)
+              Workers Planned: 1
+              Workers Launched: 1
+              Buffers: shared hit=19912
+              ->  Sort  (cost=6330.30..6330.32 rows=6 width=45) (actual time=9.145..9.147 rows=6.00 loops=2)
+                    Sort Key: m.message_type
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=19912
+                    Worker 0:  Sort Method: quicksort  Memory: 25kB
+                    ->  Partial HashAggregate  (cost=6330.15..6330.23 rows=6 width=45) (actual time=9.107..9.112 rows=6.00 loops=2)
+                          Group Key: m.message_type
+                          Batches: 1  Memory Usage: 32kB
+                          Buffers: shared hit=19904
+                          Worker 0:  Batches: 1  Memory Usage: 32kB
+                          ->  Nested Loop  (cost=177.94..6146.42 rows=12249 width=21) (actual time=0.210..5.571 rows=10349.00 loops=2)
+                                Buffers: shared hit=19904
+                                ->  Parallel Bitmap Heap Scan on messages m  (cost=177.51..1604.99 rows=3965 width=17) (actual time=0.173..0.546 rows=3296.50 loops=2)
+                                      Recheck Cond: ((sent_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (sent_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                      Heap Blocks: exact=49
+                                      Buffers: shared hit=122
+                                      Worker 0:  Heap Blocks: exact=25
+                                      ->  Bitmap Index Scan on idx_messages_sent_sender  (cost=0.00..175.83 rows=6741 width=0) (actual time=0.200..0.200 rows=6593.00 loops=1)
+                                            Index Cond: ((sent_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (sent_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                            Index Searches: 1
+                                            Buffers: shared hit=28
+                                ->  Index Only Scan using idx_receipts_msg_read on message_receipts r  (cost=0.42..1.11 rows=4 width=12) (actual time=0.001..0.001 rows=3.14 loops=6593)
+                                      Index Cond: ((message_id = m.message_id) AND (read_at IS NOT NULL))
+                                      Heap Fetches: 0
+                                      Index Searches: 6593
+                                      Buffers: shared hit=19782
+Planning:
+  Buffers: shared hit=423
+Planning Time: 1.449 ms
+Execution Time: 15.057 ms
+=== R17 run 3 ===
+Sort  (cost=7331.72..7331.74 rows=6 width=45) (actual time=11.527..13.085 rows=6.00 loops=1)
+  Sort Key: (round(avg((EXTRACT(epoch FROM (r.read_at - m.sent_at)) / 60.0)), 2))
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=19915
+  ->  Finalize GroupAggregate  (cost=7330.31..7331.64 rows=6 width=45) (actual time=11.507..13.073 rows=6.00 loops=1)
+        Group Key: m.message_type
+        Buffers: shared hit=19912
+        ->  Gather Merge  (cost=7330.31..7331.45 rows=10 width=45) (actual time=11.497..13.058 rows=12.00 loops=1)
+              Workers Planned: 1
+              Workers Launched: 1
+              Buffers: shared hit=19912
+              ->  Sort  (cost=6330.30..6330.32 rows=6 width=45) (actual time=9.034..9.035 rows=6.00 loops=2)
+                    Sort Key: m.message_type
+                    Sort Method: quicksort  Memory: 25kB
+                    Buffers: shared hit=19912
+                    Worker 0:  Sort Method: quicksort  Memory: 25kB
+                    ->  Partial HashAggregate  (cost=6330.15..6330.23 rows=6 width=45) (actual time=8.942..8.944 rows=6.00 loops=2)
+                          Group Key: m.message_type
+                          Batches: 1  Memory Usage: 32kB
+                          Buffers: shared hit=19904
+                          Worker 0:  Batches: 1  Memory Usage: 32kB
+                          ->  Nested Loop  (cost=177.94..6146.42 rows=12249 width=21) (actual time=0.266..5.582 rows=10349.00 loops=2)
+                                Buffers: shared hit=19904
+                                ->  Parallel Bitmap Heap Scan on messages m  (cost=177.51..1604.99 rows=3965 width=17) (actual time=0.227..0.585 rows=3296.50 loops=2)
+                                      Recheck Cond: ((sent_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (sent_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                      Heap Blocks: exact=48
+                                      Buffers: shared hit=122
+                                      Worker 0:  Heap Blocks: exact=26
+                                      ->  Bitmap Index Scan on idx_messages_sent_sender  (cost=0.00..175.83 rows=6741 width=0) (actual time=0.216..0.216 rows=6593.00 loops=1)
+                                            Index Cond: ((sent_at >= '2026-06-01 00:00:00+05:30'::timestamp with time zone) AND (sent_at < '2026-07-01 00:00:00+05:30'::timestamp with time zone))
+                                            Index Searches: 1
+                                            Buffers: shared hit=28
+                                ->  Index Only Scan using idx_receipts_msg_read on message_receipts r  (cost=0.42..1.11 rows=4 width=12) (actual time=0.001..0.001 rows=3.14 loops=6593)
+                                      Index Cond: ((message_id = m.message_id) AND (read_at IS NOT NULL))
+                                      Heap Fetches: 0
+                                      Index Searches: 6593
+                                      Buffers: shared hit=19782
+Planning:
+  Buffers: shared hit=423
+Planning Time: 3.113 ms
+Execution Time: 13.212 ms

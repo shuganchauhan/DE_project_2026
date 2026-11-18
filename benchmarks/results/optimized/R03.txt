@@ -1,0 +1,81 @@
+=== R03 run 1 ===
+Sort  (cost=54.64..54.66 rows=6 width=12) (actual time=1.891..1.893 rows=2.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=56 read=2
+  ->  GroupAggregate  (cost=54.46..54.57 rows=6 width=12) (actual time=1.859..1.862 rows=2.00 loops=1)
+        Group Key: m.chat_id
+        Buffers: shared hit=53 read=2
+        ->  Sort  (cost=54.46..54.48 rows=6 width=4) (actual time=1.849..1.851 rows=16.00 loops=1)
+              Sort Key: m.chat_id
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=53 read=2
+              ->  Nested Loop  (cost=0.71..54.38 rows=6 width=4) (actual time=0.038..1.837 rows=16.00 loops=1)
+                    Buffers: shared hit=50 read=2
+                    ->  Index Only Scan using idx_receipts_user_unread on message_receipts r  (cost=0.42..4.52 rows=6 width=4) (actual time=0.024..0.027 rows=16.00 loops=1)
+                          Index Cond: (user_id = 965)
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=2 read=2
+                    ->  Index Scan using messages_pkey on messages m  (cost=0.29..8.31 rows=1 width=8) (actual time=0.113..0.113 rows=1.00 loops=16)
+                          Index Cond: (message_id = r.message_id)
+                          Index Searches: 16
+                          Buffers: shared hit=48
+Planning:
+  Buffers: shared hit=286 read=3
+Planning Time: 2.837 ms
+Execution Time: 1.963 ms
+=== R03 run 2 ===
+Sort  (cost=54.64..54.66 rows=6 width=12) (actual time=0.200..0.201 rows=2.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=58
+  ->  GroupAggregate  (cost=54.46..54.57 rows=6 width=12) (actual time=0.164..0.167 rows=2.00 loops=1)
+        Group Key: m.chat_id
+        Buffers: shared hit=55
+        ->  Sort  (cost=54.46..54.48 rows=6 width=4) (actual time=0.155..0.157 rows=16.00 loops=1)
+              Sort Key: m.chat_id
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=55
+              ->  Nested Loop  (cost=0.71..54.38 rows=6 width=4) (actual time=0.026..0.144 rows=16.00 loops=1)
+                    Buffers: shared hit=52
+                    ->  Index Only Scan using idx_receipts_user_unread on message_receipts r  (cost=0.42..4.52 rows=6 width=4) (actual time=0.012..0.013 rows=16.00 loops=1)
+                          Index Cond: (user_id = 965)
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=4
+                    ->  Index Scan using messages_pkey on messages m  (cost=0.29..8.31 rows=1 width=8) (actual time=0.008..0.008 rows=1.00 loops=16)
+                          Index Cond: (message_id = r.message_id)
+                          Index Searches: 16
+                          Buffers: shared hit=48
+Planning:
+  Buffers: shared hit=289
+Planning Time: 1.292 ms
+Execution Time: 0.265 ms
+=== R03 run 3 ===
+Sort  (cost=54.64..54.66 rows=6 width=12) (actual time=0.177..0.177 rows=2.00 loops=1)
+  Sort Key: (count(*)) DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=58
+  ->  GroupAggregate  (cost=54.46..54.57 rows=6 width=12) (actual time=0.150..0.152 rows=2.00 loops=1)
+        Group Key: m.chat_id
+        Buffers: shared hit=55
+        ->  Sort  (cost=54.46..54.48 rows=6 width=4) (actual time=0.142..0.144 rows=16.00 loops=1)
+              Sort Key: m.chat_id
+              Sort Method: quicksort  Memory: 25kB
+              Buffers: shared hit=55
+              ->  Nested Loop  (cost=0.71..54.38 rows=6 width=4) (actual time=0.026..0.131 rows=16.00 loops=1)
+                    Buffers: shared hit=52
+                    ->  Index Only Scan using idx_receipts_user_unread on message_receipts r  (cost=0.42..4.52 rows=6 width=4) (actual time=0.012..0.013 rows=16.00 loops=1)
+                          Index Cond: (user_id = 965)
+                          Heap Fetches: 0
+                          Index Searches: 1
+                          Buffers: shared hit=4
+                    ->  Index Scan using messages_pkey on messages m  (cost=0.29..8.31 rows=1 width=8) (actual time=0.007..0.007 rows=1.00 loops=16)
+                          Index Cond: (message_id = r.message_id)
+                          Index Searches: 16
+                          Buffers: shared hit=48
+Planning:
+  Buffers: shared hit=289
+Planning Time: 1.739 ms
+Execution Time: 0.251 ms

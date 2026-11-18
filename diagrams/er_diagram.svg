@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 850" width="100%" height="100%" style="background-color:#0f172a; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;">
+  <defs>
+    <style>
+      .table-title { font-size: 15px; font-weight: bold; fill: #f8fafc; }
+      .field { font-size: 12px; fill: #cbd5e1; }
+      .pk { fill: #f59e0b; font-weight: bold; }
+      .fk { fill: #38bdf8; }
+      .type { fill: #64748b; font-size: 11px; }
+      .connector { stroke: #475569; stroke-width: 2; fill: none; stroke-dasharray: 4,4; }
+      .table-card { fill: #1e293b; stroke: #334155; stroke-width: 1.5; rx: 8; }
+      .header-bg { fill: #334155; rx: 8; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Connectors -->
+  <path d="M 260 140 L 400 140" class="connector" marker-end="url(#arrow)"/>
+  <path d="M 160 270 L 160 380" class="connector" marker-end="url(#arrow)"/>
+  <path d="M 510 230 L 510 380" class="connector" marker-end="url(#arrow)"/>
+  <path d="M 260 470 L 400 470" class="connector" marker-end="url(#arrow)"/>
+  <path d="M 620 470 L 760 470" class="connector" marker-end="url(#arrow)"/>
+  <path d="M 870 380 L 870 260" class="connector" marker-end="url(#arrow)"/>
+  <path d="M 510 590 L 510 670" class="connector" marker-end="url(#arrow)"/>
+  <path d="M 260 200 L 760 180" class="connector" marker-end="url(#arrow)"/>
+
+  <!-- USERS -->
+  <g transform="translate(50, 40)">
+    <rect width="210" height="220" class="table-card" />
+    <path d="M 0 0 h 210 v 35 h -210 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">USERS</text>
+    <text x="15" y="58" class="field pk">user_id <tspan class="type">INT (PK)</tspan></text>
+    <text x="15" y="80" class="field fk">phone_e164 <tspan class="type">VARCHAR(20) (UQ)</tspan></text>
+    <text x="15" y="102" class="field">display_name <tspan class="type">VARCHAR(100)</tspan></text>
+    <text x="15" y="124" class="field">about <tspan class="type">TEXT</tspan></text>
+    <text x="15" y="146" class="field">is_business <tspan class="type">BOOLEAN</tspan></text>
+    <text x="15" y="168" class="field">joined_on <tspan class="type">DATE</tspan></text>
+    <text x="15" y="190" class="field">last_seen_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+    <text x="15" y="212" class="field">status <tspan class="type">VARCHAR(20)</tspan></text>
+  </g>
+
+  <!-- CHATS -->
+  <g transform="translate(400, 50)">
+    <rect width="220" height="170" class="table-card" />
+    <path d="M 0 0 h 220 v 35 h -220 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">CHATS</text>
+    <text x="15" y="58" class="field pk">chat_id <tspan class="type">INT (PK)</tspan></text>
+    <text x="15" y="80" class="field">chat_type <tspan class="type">VARCHAR(20)</tspan></text>
+    <text x="15" y="102" class="field">group_name <tspan class="type">VARCHAR(100)</tspan></text>
+    <text x="15" y="124" class="field fk">created_by <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="146" class="field">created_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+  </g>
+
+  <!-- DEVICES -->
+  <g transform="translate(760, 50)">
+    <rect width="220" height="190" class="table-card" />
+    <path d="M 0 0 h 220 v 35 h -220 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">DEVICES</text>
+    <text x="15" y="58" class="field pk">device_id <tspan class="type">INT (PK)</tspan></text>
+    <text x="15" y="80" class="field fk">user_id <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="102" class="field">device_type <tspan class="type">VARCHAR(20)</tspan></text>
+    <text x="15" y="124" class="field">app_version <tspan class="type">VARCHAR(20)</tspan></text>
+    <text x="15" y="146" class="field">registered_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+    <text x="15" y="168" class="field">last_active_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+  </g>
+
+  <!-- CHAT_MEMBERS -->
+  <g transform="translate(50, 380)">
+    <rect width="210" height="190" class="table-card" />
+    <path d="M 0 0 h 210 v 35 h -210 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">CHAT_MEMBERS</text>
+    <text x="15" y="58" class="field pk fk">chat_id <tspan class="type">INT (PK,FK)</tspan></text>
+    <text x="15" y="80" class="field pk fk">user_id <tspan class="type">INT (PK,FK)</tspan></text>
+    <text x="15" y="102" class="field">role <tspan class="type">VARCHAR(20)</tspan></text>
+    <text x="15" y="124" class="field">joined_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+    <text x="15" y="146" class="field">left_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+    <text x="15" y="168" class="field">is_muted <tspan class="type">BOOLEAN</tspan></text>
+  </g>
+
+  <!-- MESSAGES -->
+  <g transform="translate(400, 350)">
+    <rect width="230" height="270" class="table-card" />
+    <path d="M 0 0 h 230 v 35 h -230 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">MESSAGES</text>
+    <text x="15" y="58" class="field pk">message_id <tspan class="type">INT (PK)</tspan></text>
+    <text x="15" y="80" class="field fk">chat_id <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="102" class="field fk">sender_id <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="124" class="field">sent_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+    <text x="15" y="146" class="field">message_type <tspan class="type">VARCHAR(20)</tspan></text>
+    <text x="15" y="168" class="field">body <tspan class="type">TEXT</tspan></text>
+    <text x="15" y="190" class="field fk">media_id <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="212" class="field fk">reply_to_id <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="234" class="field">is_forwarded <tspan class="type">BOOLEAN</tspan></text>
+    <text x="15" y="254" class="field">is_deleted <tspan class="type">BOOLEAN</tspan></text>
+  </g>
+
+  <!-- MESSAGE_RECEIPTS -->
+  <g transform="translate(760, 360)">
+    <rect width="220" height="160" class="table-card" />
+    <path d="M 0 0 h 220 v 35 h -220 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">MESSAGE_RECEIPTS</text>
+    <text x="15" y="58" class="field pk fk">message_id <tspan class="type">INT (PK,FK)</tspan></text>
+    <text x="15" y="80" class="field pk fk">user_id <tspan class="type">INT (PK,FK)</tspan></text>
+    <text x="15" y="102" class="field">delivered_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+    <text x="15" y="124" class="field">read_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+  </g>
+
+  <!-- MEDIA -->
+  <g transform="translate(50, 630)">
+    <rect width="210" height="180" class="table-card" />
+    <path d="M 0 0 h 210 v 35 h -210 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">MEDIA</text>
+    <text x="15" y="58" class="field pk">media_id <tspan class="type">INT (PK)</tspan></text>
+    <text x="15" y="80" class="field fk">uploader_id <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="102" class="field">media_type <tspan class="type">VARCHAR(20)</tspan></text>
+    <text x="15" y="124" class="field">mime_type <tspan class="type">VARCHAR(100)</tspan></text>
+    <text x="15" y="146" class="field">size_bytes <tspan class="type">BIGINT</tspan></text>
+    <text x="15" y="168" class="field">sha256 <tspan class="type">CHAR(64)</tspan></text>
+  </g>
+
+  <!-- CALLS -->
+  <g transform="translate(400, 660)">
+    <rect width="220" height="170" class="table-card" />
+    <path d="M 0 0 h 220 v 35 h -220 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">CALLS</text>
+    <text x="15" y="58" class="field pk">call_id <tspan class="type">INT (PK)</tspan></text>
+    <text x="15" y="80" class="field fk">chat_id <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="102" class="field fk">caller_id <tspan class="type">INT (FK)</tspan></text>
+    <text x="15" y="124" class="field">call_type <tspan class="type">VARCHAR(20)</tspan></text>
+    <text x="15" y="146" class="field">status <tspan class="type">VARCHAR(20)</tspan></text>
+  </g>
+
+  <!-- BLOCKED_USERS -->
+  <g transform="translate(760, 620)">
+    <rect width="220" height="140" class="table-card" />
+    <path d="M 0 0 h 220 v 35 h -220 z" class="header-bg" />
+    <text x="15" y="23" class="table-title">BLOCKED_USERS</text>
+    <text x="15" y="58" class="field pk fk">blocker_id <tspan class="type">INT (PK,FK)</tspan></text>
+    <text x="15" y="80" class="field pk fk">blocked_id <tspan class="type">INT (PK,FK)</tspan></text>
+    <text x="15" y="102" class="field">blocked_at <tspan class="type">TIMESTAMPTZ</tspan></text>
+  </g>
+</svg>

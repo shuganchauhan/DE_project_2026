@@ -1,0 +1,81 @@
+=== R11 run 1 ===
+Sort  (cost=1978.61..1978.61 rows=2 width=34) (actual time=3.302..3.308 rows=1.00 loops=1)
+  Sort Key: c.started_at DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=303 read=4
+  ->  Nested Loop  (cost=0.86..1978.60 rows=2 width=34) (actual time=1.721..3.274 rows=1.00 loops=1)
+        Buffers: shared hit=300 read=4
+        ->  Nested Loop  (cost=0.57..1977.45 rows=2 width=22) (actual time=1.665..3.217 rows=1.00 loops=1)
+              Buffers: shared hit=297 read=4
+              ->  Index Only Scan using chat_members_pkey on chat_members  (cost=0.29..1944.19 rows=4 width=4) (actual time=1.038..2.452 rows=4.00 loops=1)
+                    Index Cond: (user_id = 965)
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=292
+              ->  Index Scan using idx_calls_missed_chat_started on calls c  (cost=0.28..8.30 rows=1 width=26) (actual time=0.188..0.188 rows=0.25 loops=4)
+                    Index Cond: ((chat_id = chat_members.chat_id) AND (started_at >= '2025-01-01 00:00:00+05:30'::timestamp with time zone))
+                    Filter: (caller_id <> 965)
+                    Index Searches: 4
+                    Buffers: shared hit=5 read=4
+        ->  Index Scan using users_pkey on users u  (cost=0.29..0.57 rows=1 width=16) (actual time=0.052..0.053 rows=1.00 loops=1)
+              Index Cond: (user_id = c.caller_id)
+              Index Searches: 1
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=323
+Planning Time: 1.567 ms
+Execution Time: 3.367 ms
+=== R11 run 2 ===
+Sort  (cost=1978.61..1978.61 rows=2 width=34) (actual time=2.375..2.376 rows=1.00 loops=1)
+  Sort Key: c.started_at DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=307
+  ->  Nested Loop  (cost=0.86..1978.60 rows=2 width=34) (actual time=0.752..2.353 rows=1.00 loops=1)
+        Buffers: shared hit=304
+        ->  Nested Loop  (cost=0.57..1977.45 rows=2 width=22) (actual time=0.739..2.340 rows=1.00 loops=1)
+              Buffers: shared hit=301
+              ->  Index Only Scan using chat_members_pkey on chat_members  (cost=0.29..1944.19 rows=4 width=4) (actual time=0.722..2.309 rows=4.00 loops=1)
+                    Index Cond: (user_id = 965)
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=292
+              ->  Index Scan using idx_calls_missed_chat_started on calls c  (cost=0.28..8.30 rows=1 width=26) (actual time=0.006..0.006 rows=0.25 loops=4)
+                    Index Cond: ((chat_id = chat_members.chat_id) AND (started_at >= '2025-01-01 00:00:00+05:30'::timestamp with time zone))
+                    Filter: (caller_id <> 965)
+                    Index Searches: 4
+                    Buffers: shared hit=9
+        ->  Index Scan using users_pkey on users u  (cost=0.29..0.57 rows=1 width=16) (actual time=0.011..0.011 rows=1.00 loops=1)
+              Index Cond: (user_id = c.caller_id)
+              Index Searches: 1
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=323
+Planning Time: 1.366 ms
+Execution Time: 2.422 ms
+=== R11 run 3 ===
+Sort  (cost=1978.61..1978.61 rows=2 width=34) (actual time=3.229..3.230 rows=1.00 loops=1)
+  Sort Key: c.started_at DESC
+  Sort Method: quicksort  Memory: 25kB
+  Buffers: shared hit=307
+  ->  Nested Loop  (cost=0.86..1978.60 rows=2 width=34) (actual time=1.158..3.196 rows=1.00 loops=1)
+        Buffers: shared hit=304
+        ->  Nested Loop  (cost=0.57..1977.45 rows=2 width=22) (actual time=1.121..3.158 rows=1.00 loops=1)
+              Buffers: shared hit=301
+              ->  Index Only Scan using chat_members_pkey on chat_members  (cost=0.29..1944.19 rows=4 width=4) (actual time=1.086..3.095 rows=4.00 loops=1)
+                    Index Cond: (user_id = 965)
+                    Heap Fetches: 0
+                    Index Searches: 1
+                    Buffers: shared hit=292
+              ->  Index Scan using idx_calls_missed_chat_started on calls c  (cost=0.28..8.30 rows=1 width=26) (actual time=0.012..0.013 rows=0.25 loops=4)
+                    Index Cond: ((chat_id = chat_members.chat_id) AND (started_at >= '2025-01-01 00:00:00+05:30'::timestamp with time zone))
+                    Filter: (caller_id <> 965)
+                    Index Searches: 4
+                    Buffers: shared hit=9
+        ->  Index Scan using users_pkey on users u  (cost=0.29..0.57 rows=1 width=16) (actual time=0.033..0.033 rows=1.00 loops=1)
+              Index Cond: (user_id = c.caller_id)
+              Index Searches: 1
+              Buffers: shared hit=3
+Planning:
+  Buffers: shared hit=323
+Planning Time: 1.342 ms
+Execution Time: 3.292 ms

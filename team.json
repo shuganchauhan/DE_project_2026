@@ -1,0 +1,27 @@
+{
+  "team_number": "14",
+  "group_lead": {
+    "name": "Shagun Chauhan",
+    "enrollment_no": "23103057",
+    "github": "shuganchauhan"
+  },
+  "members": [
+    {
+      "name": "Ashwin Agrawal",
+      "enrollment_no": "23103058",
+      "github": "ashwinaggrawal2610"
+    },
+    {
+      "name": "Member 3",
+      "enrollment_no": "23103059",
+      "github": "member3"
+    },
+    {
+      "name": "Member 4",
+      "enrollment_no": "23103060",
+      "github": "member4"
+    }
+  ],
+  "postgres_version": "18",
+  "laptop_used_for_benchmarks": "Apple MacBook (Apple Silicon, macOS)"
+}
