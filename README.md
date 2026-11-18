@@ -1,9 +1,12 @@
-# WhatsApp Messaging Database:- DBMS Project
+# WhatsApp Messaging Database — DBMS Project
 
+**Course:** Database Management Systems (DBMS)  
+**Academic Year:** B.Tech 2nd Year  
+**Team Size:** 4 Members  
+**Database:** PostgreSQL 15+  
+**Final Submission:** Monday, 23 November 2026
 
-**Course:** Database Management Systems · **Year:** B.Tech 2nd year · **Team size:** 4
-**Database:** PostgreSQL 15 or newer · **Final submission:** Mon 23 Nov 2026
-**Topics used:** Data types & constraints · Keys & relationships · Normalization · Query execution plans · Indexing · Query optimization · VACUUM/ANALYZE · Partitioning & sharding
+**Key Concepts:** Data Types & Constraints · Primary and Foreign Keys · Relationships & Normalization · Query Execution Plans · Indexing Strategies · Query Optimization · VACUUM & ANALYZE · Database Partitioning & Sharding
 
 ## Files in this folder
 
